@@ -4,7 +4,7 @@ metadata:
   name: nginx-service
 spec:
   type: ClusterIP
-  ports: #
+  ports: #123
     - name: http  
       port: 80
       targetPort: 80
