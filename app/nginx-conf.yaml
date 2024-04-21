@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    events {
+      worker_connections 1024;
+    }
+
+    http {
+      map $http_x_custom_domain $is_allowed_domain {
+        default 0; 
+        "your-custom-domain.com" 1; 
+      }
+
+      include /etc/nginx/conf.d/*.conf;
+    }
+  default.conf: |
+    server {
+      listen 80;
+      server_name sre.task-4-0.com;
+
+      return 301 https://$host$request_uri;
+    }
+
+    server {
+      listen 443 ssl;
+      server_name sre.task-4-0.com;
+
+      ssl_certificate /etc/nginx/certs/server.crt;
+      ssl_certificate_key /etc/nginx/certs/server.key;
+
+      location / {
+        default_type text/plain;
+        if ($http_x_custom_domain != "your-custom-domain.com") {
+          return 200 'No Use Custom Domain Header';
+        }
+        return 200 'Custom Domain Header';
+      }
+    }
