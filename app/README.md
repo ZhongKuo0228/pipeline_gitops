@@ -21,7 +21,6 @@ kubectl run --restart=Never --rm -it curl --image curlimages/curl -- sh
 
 ## 測試 Custom Domain Header
 
-
 ```
 curl -k -H "X-Custom-Domain: your-custom-domain.com" https://localhost/
 ```
