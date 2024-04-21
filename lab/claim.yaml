@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: argocd-application-controller-pvc
+  labels:
+    app.kubernetes.io/name: argocd-application-controller
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ebs-sc  # 確保使用正確的 StorageClass 名稱
+  resources:
+    requests:
+      storage: 10Gi  # 根據需要調整存儲大小
